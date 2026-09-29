@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+<body>
+
+<h1>WebSocket Test</h1>
+
+<script>
+    const socket = new WebSocket(
+        "ws://127.0.0.1:8000/ws/chat/"
+    );
+
+    socket.onopen = function () {
+        console.log("CONNECTED");
+        socket.send("Hello Django!");
+    };
+
+    socket.onmessage = function (event) {
+        console.log("MESSAGE:", event.data);
+    };
+
+    socket.onclose = function () {
+        console.log("DISCONNECTED");
+    };
+</script>
+
+</body>
+</html>
