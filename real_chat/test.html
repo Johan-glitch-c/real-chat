@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>WebSocket Test</title>
 </head>
+
 <body>
 
 <h1>WebSocket Test</h1>
 
 <script>
-    const socket = new WebSocket(
-        "ws://127.0.0.1:8000/ws/chat/"
-    );
+    console.log("SCRIPT START");
+
+    const socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
 
     socket.onopen = function () {
         console.log("CONNECTED");
+
         socket.send("Hello Django!");
     };
 
     socket.onmessage = function (event) {
-        console.log("MESSAGE:", event.data);
+        console.log("MESSAGE FROM SERVER:", event.data);
     };
 
-    socket.onclose = function () {
-        console.log("DISCONNECTED");
+    socket.onerror = function (error) {
+        console.log("WEBSOCKET ERROR:", error);
+    };
+
+    socket.onclose = function (event) {
+        console.log("WEBSOCKET CLOSED:", event);
     };
 </script>
 
