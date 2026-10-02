@@ -74,6 +74,22 @@ WSGI_APPLICATION = 'real_chat.wsgi.application'
 ASGI_APPLICATION = "real_chat.asgi.application"
 
 
+
+CHANNEL_LAYERS= {
+    'default' :{
+        'BACKEND': "channels_redis.core.RedisChannelLayer",
+        "CONFIG":{
+            "hosts": [{
+                "address": "redis://127.0.0.1:6379",
+                "socket_timeout": None
+            }],
+        },
+    },
+    
+    }
+
+
+
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 

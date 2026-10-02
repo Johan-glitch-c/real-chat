@@ -7,30 +7,53 @@
 
 <body>
 
-<h1>WebSocket Test</h1>
+    <input id="messageInput" type="text" placeholder="Введите сообщение">
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="messages"></div>
 
 <script>
-    console.log("SCRIPT START");
-
     const socket = new WebSocket("ws://127.0.0.1:8000/ws/chat/");
+
+    const messageInput = document.getElementById("messageInput");
+    const messages = document.getElementById("messages");
+
 
     socket.onopen = function () {
         console.log("CONNECTED");
-
-        socket.send("Hello Django!");
     };
+
 
     socket.onmessage = function (event) {
-        console.log("MESSAGE FROM SERVER:", event.data);
+        console.log("FROM SERVER:", event.data);
+
+        messages.innerHTML += `
+            <p>${event.data}</p>
+        `;
     };
+
 
     socket.onerror = function (error) {
-        console.log("WEBSOCKET ERROR:", error);
+        console.log("ERROR:", error);
     };
 
-    socket.onclose = function (event) {
-        console.log("WEBSOCKET CLOSED:", event);
+
+    socket.onclose = function () {
+        console.log("CLOSED");
     };
+
+
+    function sendMessage() {
+        const message = messageInput.value;
+
+        if (!message) {
+            return;
+        }
+
+        socket.send(message);
+
+        messageInput.value = "";
+    }
 </script>
 
 </body>
